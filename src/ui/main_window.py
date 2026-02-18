@@ -191,14 +191,33 @@ class MainWindow(ctk.CTk):
             )
         else:
             if self._compose_visible:
+                # Must insert at index 0 so library is left of compose
                 self._paned.add(
                     self._library_panel,
                     minsize=self._MIN_LIB_WIDTH,
                     width=self._DEFAULT_LIB_WIDTH,
                     stretch="always",
                     sticky="nsew",
-                    before=self._compose_panel,
                 )
+                # Re-order: library must be first pane
+                panes = self._paned.panes()
+                if len(panes) == 2 and panes[1] == str(self._library_panel):
+                    # library ended up on the right — rebuild order
+                    self._paned.forget(self._compose_panel)
+                    self._paned.forget(self._library_panel)
+                    self._paned.add(
+                        self._library_panel,
+                        minsize=self._MIN_LIB_WIDTH,
+                        width=self._DEFAULT_LIB_WIDTH,
+                        stretch="always",
+                        sticky="nsew",
+                    )
+                    self._paned.add(
+                        self._compose_panel,
+                        minsize=self._MIN_COMPOSE_WIDTH,
+                        stretch="always",
+                        sticky="nsew",
+                    )
             else:
                 self._paned.add(
                     self._library_panel,

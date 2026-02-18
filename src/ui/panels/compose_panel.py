@@ -46,6 +46,8 @@ class ComposePanel(ctk.CTkFrame):
         self._build()
         self._svc.subscribe(self._on_state_changed)
         self._refresh_selectors()
+        # Trace custom separator text changes so preview stays live
+        self._custom_sep_var.trace_add("write", lambda *_: self._update_preview())
 
     # ------------------------------------------------------------------
     # Build
@@ -191,33 +193,41 @@ class ComposePanel(ctk.CTkFrame):
             justify="left",
             wraplength=420,
         )
-        self._preview_lbl.pack(fill="x", padx=pad, pady=(0, 8))
+        self._preview_lbl.pack(fill="x", padx=pad, pady=(0, pad))
 
-        # ── Toast ─────────────────────────────────────────────────────
-        self._toast_lbl = ctk.CTkLabel(
-            self._scroll,
-            text="", height=0,
-            fg_color=AppTheme.BG_SELECTED,
-            corner_radius=4,
-            text_color=AppTheme.FG_ACCENT,
-            font=(AppTheme.FONT_FAMILY_UI, AppTheme.FONT_SIZE_SM),
+        # Bind body changes to preview
+        self._body_text.bind("<KeyRelease>", lambda _: self._update_preview())
+
+        # ── Fixed bottom bar (always visible, outside scroll) ─────────
+        ctk.CTkFrame(self, fg_color=AppTheme.DIVIDER_COLOR, height=1, corner_radius=0).pack(
+            fill="x", side="bottom"
         )
 
-        # ── Compose & Copy button ─────────────────────────────────────
+        # Toast bar – hidden until needed
+        self._toast_lbl = ctk.CTkLabel(
+            self,
+            text="",
+            fg_color=AppTheme.BG_SELECTED,
+            corner_radius=0,
+            text_color=AppTheme.FG_ACCENT,
+            font=(AppTheme.FONT_FAMILY_UI, AppTheme.FONT_SIZE_SM),
+            anchor="center",
+            height=28,
+        )
+        # (not packed initially – shown by _toast())
+
+        # Compose & Copy CTA – always visible at panel bottom
         ctk.CTkButton(
-            self._scroll,
+            self,
             text="⚡ COMPOSE & COPY",
             height=52,
             fg_color=AppTheme.BTN_PRIMARY_BG,
             text_color=AppTheme.BTN_PRIMARY_FG,
             hover_color=AppTheme.BTN_PRIMARY_HOVER,
             font=(AppTheme.FONT_FAMILY_UI, AppTheme.FONT_SIZE_LG, "bold"),
-            corner_radius=AppTheme.BTN_CORNER,
+            corner_radius=0,
             command=self._handle_compose_and_copy,
-        ).pack(fill="x", padx=pad, pady=(0, pad))
-
-        # Bind body changes to preview
-        self._body_text.bind("<KeyRelease>", lambda _: self._update_preview())
+        ).pack(fill="x", side="bottom")
 
     # ------------------------------------------------------------------
     # Section header helper
@@ -353,7 +363,8 @@ class ComposePanel(ctk.CTkFrame):
         if self._toast_job:
             self.after_cancel(self._toast_job)
         self._toast_lbl.configure(text=f"  ✓ {message}  ")
-        self._toast_lbl.pack(fill="x", padx=AppTheme.PANEL_PAD, pady=(0, 4))
+        # pack above the divider (both use side="bottom", so last-packed = topmost)
+        self._toast_lbl.pack(fill="x", side="bottom")
         self._toast_job = self.after(_TOAST_MS, self._hide_toast)
 
     def _hide_toast(self) -> None:

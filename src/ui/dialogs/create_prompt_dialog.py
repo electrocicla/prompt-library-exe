@@ -29,8 +29,9 @@ class CreatePromptDialog(ctk.CTkToplevel):
 
         title = "Edit Prompt" if self._is_edit else "New Prompt"
         self.title(title)
-        self.geometry("480x480")
-        self.resizable(False, False)
+        self.geometry("500x560")
+        self.minsize(440, 500)
+        self.resizable(True, True)
         self.configure(fg_color=AppTheme.BG_PANEL)
         self.transient(master)
         self.grab_set()
@@ -102,7 +103,7 @@ class CreatePromptDialog(ctk.CTkToplevel):
 
         # --- Buttons ---
         btn_row = ctk.CTkFrame(self, fg_color="transparent")
-        btn_row.pack(fill="x", padx=pad, pady=(0, pad))
+        btn_row.pack(fill="x", padx=pad, pady=(8, pad), side="bottom")
 
         ctk.CTkButton(
             btn_row,
