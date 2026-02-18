@@ -52,18 +52,18 @@ class AppTheme:
     # Fonts
     FONT_FAMILY = "Consolas"
     FONT_FAMILY_UI = "Segoe UI"
-    FONT_SIZE_XS = 9
-    FONT_SIZE_SM = 10
-    FONT_SIZE_MD = 12
-    FONT_SIZE_LG = 14
-    FONT_SIZE_XL = 16
-    FONT_SIZE_TITLE = 18
+    FONT_SIZE_XS = 11
+    FONT_SIZE_SM = 13
+    FONT_SIZE_MD = 14
+    FONT_SIZE_LG = 16
+    FONT_SIZE_XL = 19
+    FONT_SIZE_TITLE = 22
 
     # Geometry
     CARD_CORNER = 8
     BTN_CORNER = 6
-    PANEL_PAD = 12
-    CARD_PAD = 10
+    PANEL_PAD = 14
+    CARD_PAD = 12
     DIVIDER_COLOR = "#222230"
 
     # Role badge colours

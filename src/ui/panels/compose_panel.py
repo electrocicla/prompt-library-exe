@@ -67,12 +67,12 @@ class ComposePanel(ctk.CTkFrame):
         ctk.CTkButton(
             header,
             text="✕ Clear All",
-            height=26,
-            width=90,
+            height=32,
+            width=100,
             fg_color=AppTheme.BTN_SECONDARY_BG,
             text_color=AppTheme.FG_MUTED,
             hover_color=AppTheme.BG_HOVER,
-            font=(AppTheme.FONT_FAMILY_UI, AppTheme.FONT_SIZE_XS),
+            font=(AppTheme.FONT_FAMILY_UI, AppTheme.FONT_SIZE_SM),
             corner_radius=AppTheme.BTN_CORNER,
             command=self._clear_all_selections,
         ).pack(side="right", padx=pad, pady=8)
@@ -120,7 +120,7 @@ class ComposePanel(ctk.CTkFrame):
         ctk.CTkButton(
             self._scroll,
             text="📋 Copy Body Only",
-            height=28,
+            height=36,
             fg_color=AppTheme.BTN_COPY_BG,
             text_color=AppTheme.BTN_COPY_FG,
             hover_color=AppTheme.BG_HOVER,
@@ -160,8 +160,9 @@ class ComposePanel(ctk.CTkFrame):
                 text_color=AppTheme.FG_MAIN,
                 fg_color=AppTheme.FG_ACCENT,
                 border_color=AppTheme.BORDER,
+                font=(AppTheme.FONT_FAMILY_UI, AppTheme.FONT_SIZE_SM),
                 command=self._on_sep_changed,
-            ).pack(anchor="w", padx=pad, pady=3)
+            ).pack(anchor="w", padx=pad, pady=5)
 
         self._custom_sep_entry = ctk.CTkEntry(
             sep_frame,
@@ -170,7 +171,8 @@ class ComposePanel(ctk.CTkFrame):
             fg_color=AppTheme.BG_INPUT,
             border_color=AppTheme.BORDER,
             text_color=AppTheme.FG_MAIN,
-            height=30,
+            font=(AppTheme.FONT_FAMILY_UI, AppTheme.FONT_SIZE_SM),
+            height=36,
             state="disabled",
         )
         self._custom_sep_entry.pack(fill="x", padx=pad, pady=(0, pad))
@@ -187,7 +189,7 @@ class ComposePanel(ctk.CTkFrame):
             font=(AppTheme.FONT_FAMILY, AppTheme.FONT_SIZE_SM),
             anchor="nw",
             justify="left",
-            wraplength=340,
+            wraplength=420,
         )
         self._preview_lbl.pack(fill="x", padx=pad, pady=(0, 8))
 
@@ -205,7 +207,7 @@ class ComposePanel(ctk.CTkFrame):
         ctk.CTkButton(
             self._scroll,
             text="⚡ COMPOSE & COPY",
-            height=44,
+            height=52,
             fg_color=AppTheme.BTN_PRIMARY_BG,
             text_color=AppTheme.BTN_PRIMARY_FG,
             hover_color=AppTheme.BTN_PRIMARY_HOVER,

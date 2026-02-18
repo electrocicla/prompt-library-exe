@@ -65,12 +65,12 @@ class _ItemRow(ctk.CTkFrame):
         handle = ctk.CTkLabel(
             self,
             text=self.HANDLE_TEXT,
-            width=20,
-            font=(AppTheme.FONT_FAMILY, AppTheme.FONT_SIZE_MD),
+            width=24,
+            font=(AppTheme.FONT_FAMILY, AppTheme.FONT_SIZE_LG),
             text_color=AppTheme.FG_MUTED,
             cursor="fleur",
         )
-        handle.pack(side="left", padx=(6, 2), pady=4)
+        handle.pack(side="left", padx=(6, 2), pady=6)
 
         # Bind drag events to the handle
         handle.bind("<ButtonPress-1>", self._on_press)
@@ -82,8 +82,8 @@ class _ItemRow(ctk.CTkFrame):
             self,
             text="",
             variable=self.var,
-            width=20,
-            height=20,
+            width=24,
+            height=24,
             fg_color=AppTheme.FG_ACCENT,
             border_color=AppTheme.BORDER,
             hover_color=AppTheme.BTN_PRIMARY_HOVER,
@@ -94,7 +94,7 @@ class _ItemRow(ctk.CTkFrame):
         name_lbl = ctk.CTkLabel(
             self,
             text=self.prompt.name,
-            font=(AppTheme.FONT_FAMILY_UI, AppTheme.FONT_SIZE_SM),
+            font=(AppTheme.FONT_FAMILY_UI, AppTheme.FONT_SIZE_MD),
             text_color=role_color,
             anchor="w",
         )
@@ -104,14 +104,14 @@ class _ItemRow(ctk.CTkFrame):
         ctk.CTkButton(
             self,
             text="📋",
-            width=26, height=22,
+            width=32, height=28,
             fg_color=AppTheme.BTN_COPY_BG,
             text_color=AppTheme.BTN_COPY_FG,
             hover_color=AppTheme.BG_HOVER,
-            font=(AppTheme.FONT_FAMILY, AppTheme.FONT_SIZE_XS),
+            font=(AppTheme.FONT_FAMILY, AppTheme.FONT_SIZE_SM),
             corner_radius=4,
             command=lambda: self._on_copy(self.prompt),
-        ).pack(side="right", padx=4, pady=2)
+        ).pack(side="right", padx=4, pady=4)
 
     # ------------------------------------------------------------------
     # Drag events – delegate to parent

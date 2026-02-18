@@ -84,10 +84,10 @@ class PromptCard(ctk.CTkFrame):
         star_text = "★" if p.is_favorite else "☆"
         star_color = AppTheme.FG_GOLD if p.is_favorite else AppTheme.FG_MUTED
         self._star_btn = ctk.CTkButton(
-            header, text=star_text, width=24, height=24,
+            header, text=star_text, width=30, height=30,
             fg_color="transparent", text_color=star_color,
             hover_color=AppTheme.BG_HOVER,
-            font=(AppTheme.FONT_FAMILY, 14),
+            font=(AppTheme.FONT_FAMILY, AppTheme.FONT_SIZE_LG),
             command=self._handle_favourite,
         )
         self._star_btn.grid(row=0, column=0, padx=(0, 6))
@@ -152,7 +152,7 @@ class PromptCard(ctk.CTkFrame):
             font=(AppTheme.FONT_FAMILY, AppTheme.FONT_SIZE_SM),
             text_color=AppTheme.FG_MUTED,
             anchor="w",
-            wraplength=240,
+            wraplength=300,
             justify="left",
             cursor="xterm",
         )
@@ -166,7 +166,7 @@ class PromptCard(ctk.CTkFrame):
         actions.pack(fill="x", padx=pad, pady=(0, pad))
 
         ctk.CTkButton(
-            actions, text="📋 Copy", width=70, height=26,
+            actions, text="📋 Copy", width=84, height=32,
             fg_color=AppTheme.BTN_COPY_BG, text_color=AppTheme.BTN_COPY_FG,
             hover_color=AppTheme.BG_HOVER,
             font=(AppTheme.FONT_FAMILY_UI, AppTheme.FONT_SIZE_SM),
@@ -175,7 +175,7 @@ class PromptCard(ctk.CTkFrame):
         ).pack(side="left", padx=(0, 4))
 
         ctk.CTkButton(
-            actions, text="✏ Full Edit", width=76, height=26,
+            actions, text="✏ Full Edit", width=92, height=32,
             fg_color=AppTheme.BTN_SECONDARY_BG, text_color=AppTheme.FG_MUTED,
             hover_color=AppTheme.BG_HOVER,
             font=(AppTheme.FONT_FAMILY_UI, AppTheme.FONT_SIZE_SM),
@@ -184,7 +184,7 @@ class PromptCard(ctk.CTkFrame):
         ).pack(side="left", padx=(0, 4))
 
         ctk.CTkButton(
-            actions, text="🗑", width=32, height=26,
+            actions, text="🗑", width=38, height=32,
             fg_color=AppTheme.BTN_DANGER_BG, text_color=AppTheme.FG_WARN,
             hover_color="#4a1a1a",
             font=(AppTheme.FONT_FAMILY_UI, AppTheme.FONT_SIZE_SM),
@@ -208,7 +208,7 @@ class PromptCard(ctk.CTkFrame):
             border_color=AppTheme.BORDER_ACCENT,
             border_width=1,
             text_color=AppTheme.FG_MAIN,
-            height=26,
+            height=32,
             font=(AppTheme.FONT_FAMILY_UI, AppTheme.FONT_SIZE_MD, "bold"),
         )
         self._name_entry.insert(0, self._prompt.name)

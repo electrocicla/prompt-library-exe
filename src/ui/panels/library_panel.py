@@ -79,7 +79,7 @@ class LibraryPanel(ctk.CTkFrame):
         toolbar.pack(side="right", padx=pad, pady=4)
 
         ctk.CTkButton(
-            toolbar, text="＋ New", width=64, height=28,
+            toolbar, text="＋ New", width=80, height=34,
             fg_color=AppTheme.BTN_PRIMARY_BG, text_color=AppTheme.BTN_PRIMARY_FG,
             hover_color=AppTheme.BTN_PRIMARY_HOVER,
             font=(AppTheme.FONT_FAMILY_UI, AppTheme.FONT_SIZE_SM, "bold"),
@@ -88,7 +88,7 @@ class LibraryPanel(ctk.CTkFrame):
         ).pack(side="left", padx=(0, 4))
 
         ctk.CTkButton(
-            toolbar, text="⬆ Import", width=72, height=28,
+            toolbar, text="⬆ Import", width=86, height=34,
             fg_color=AppTheme.BTN_SECONDARY_BG, text_color=AppTheme.FG_MUTED,
             hover_color=AppTheme.BG_HOVER,
             font=(AppTheme.FONT_FAMILY_UI, AppTheme.FONT_SIZE_SM),
@@ -97,7 +97,7 @@ class LibraryPanel(ctk.CTkFrame):
         ).pack(side="left", padx=(0, 4))
 
         ctk.CTkButton(
-            toolbar, text="⬇ Export", width=72, height=28,
+            toolbar, text="⬇ Export", width=86, height=34,
             fg_color=AppTheme.BTN_SECONDARY_BG, text_color=AppTheme.FG_MUTED,
             hover_color=AppTheme.BG_HOVER,
             font=(AppTheme.FONT_FAMILY_UI, AppTheme.FONT_SIZE_SM),
@@ -118,10 +118,10 @@ class LibraryPanel(ctk.CTkFrame):
             fg_color=AppTheme.BG_INPUT,
             border_color=AppTheme.BORDER,
             text_color=AppTheme.FG_MAIN,
-            height=34,
+            height=40,
             font=(AppTheme.FONT_FAMILY_UI, AppTheme.FONT_SIZE_SM),
         )
-        self._search_entry.pack(fill="x", padx=pad, pady=6)
+        self._search_entry.pack(fill="x", padx=pad, pady=8)
 
         # ── Category chip filter ──────────────────────────────────────
         self._chips_outer = ctk.CTkFrame(self, fg_color=AppTheme.BG_ROOT, corner_radius=0)
@@ -201,8 +201,8 @@ class LibraryPanel(ctk.CTkFrame):
             chip = ctk.CTkButton(
                 self._chips_scroll,
                 text=cat,
-                height=24,
-                width=max(40, len(cat) * 8),
+                height=30,
+                width=max(50, len(cat) * 9),
                 fg_color=AppTheme.BTN_PRIMARY_BG if is_active else AppTheme.BTN_SECONDARY_BG,
                 text_color=AppTheme.BTN_PRIMARY_FG if is_active else AppTheme.FG_MUTED,
                 hover_color=AppTheme.BTN_PRIMARY_HOVER,

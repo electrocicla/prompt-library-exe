@@ -40,8 +40,8 @@ class MainWindow(ctk.CTk):
         super().__init__()
 
         self.title("Not-Meta Prompt Library")
-        self.geometry("1100x720")
-        self.minsize(860, 560)
+        self.geometry("1200x800")
+        self.minsize(960, 620)
         self.configure(fg_color=AppTheme.BG_ROOT)
 
         self._set_icon()
