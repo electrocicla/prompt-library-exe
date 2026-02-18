@@ -42,22 +42,13 @@ Models (zero logic)
 - [x] Category filter chips (horizontal scrollable chip bar above prompt list)
 - [x] "Clear all selections" button in compose panel header
 
-### v1.2 – SQLite Storage (local-only)
-> This is a local-only exe. No cloud, no sync — all data stays in `%LOCALAPPDATA%\NotMetaPromptLibrary\`.
-- [ ] Extract `IStorageBackend` Protocol: `load() → LibraryState`, `save(state) → None`
-- [ ] Implement `SQLiteStorageBackend` (`prompts.db`) for indexed search and faster ranked queries
-- [ ] Keep `JSONStorageBackend` (current impl) as the default fallback for portability
-- [ ] `StorageService` becomes a thin facade that delegates to the active backend
-- [ ] One-time migration: detect existing `prompts.json` on first launch and import into SQLite
-
-```python
-class IStorageBackend(Protocol):
-    def load(self) -> LibraryState: ...
-    def save(self, state: LibraryState) -> None: ...
-
-class StorageService:
-    def __init__(self, backend: IStorageBackend) -> None: ...
-```
+### v1.2 – Local Storage ✅ ALREADY COMPLETE
+> All data lives in `%LOCALAPPDATA%\NotMetaPromptLibrary\prompts.json`. No SQLite needed at this scale.
+- [x] Atomic JSON save on every mutation (write-to-temp + rename, no corruption risk)
+- [x] Auto-load on startup
+- [x] **Export**: toolbar button → `tkinter.filedialog` → user-chosen `.json` path
+- [x] **Import**: toolbar button → file open dialog → merge-or-replace prompt
+- [x] `StorageService.export_json()` / `import_json()` + `storage_path` property
 
 ### v1.3 – Plugin / Extension Layer (OCP)
 - [ ] `IPromptTransformer` interface: `transform(text: str) → str`
