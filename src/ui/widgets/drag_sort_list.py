@@ -9,6 +9,7 @@ check-state change. Does NOT know about persistence.
 
 from __future__ import annotations
 
+import tkinter as tk
 from typing import Callable, Dict, List, Optional, Tuple
 import customtkinter as ctk
 
@@ -117,14 +118,14 @@ class _ItemRow(ctk.CTkFrame):
     # Drag events – delegate to parent
     # ------------------------------------------------------------------
 
-    def _on_press(self, event) -> None:
+    def _on_press(self, event: tk.Event) -> None:
         self._drag_start_y = event.y_root
         self._on_drag_start(self, event.y_root)
 
-    def _on_motion(self, event) -> None:
+    def _on_motion(self, event: tk.Event) -> None:
         self._on_drag_motion(event.y_root)
 
-    def _on_release(self, event) -> None:
+    def _on_release(self, _event: tk.Event) -> None:
         self._on_drag_release()
 
     # ------------------------------------------------------------------

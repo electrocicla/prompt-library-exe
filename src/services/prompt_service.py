@@ -81,7 +81,7 @@ class PromptService:
         self._persist()
         return prompt
 
-    def update(self, prompt_id: str, **kwargs) -> Optional[Prompt]:
+    def update(self, prompt_id: str, **kwargs: object) -> Optional[Prompt]:
         for i, p in enumerate(self._state.prompts):
             if p.id == prompt_id:
                 updated = p.with_updated_fields(**kwargs)

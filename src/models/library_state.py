@@ -42,7 +42,7 @@ class LibraryState:
         }
 
     @staticmethod
-    def from_dict(data: dict) -> "LibraryState":
+    def from_dict(data: dict[str, object]) -> "LibraryState":
         prompts_raw = data.get("prompts", [])
         prompts = [Prompt.from_dict(p) for p in prompts_raw if isinstance(p, dict)]
         return LibraryState(

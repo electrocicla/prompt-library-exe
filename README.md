@@ -17,7 +17,23 @@ Built with Python + customtkinter for a native-feeling dark UI. No Electron, no 
 - **Favourites** – Star important prompts for a score boost
 - **Export / Import** – JSON backup and restore with merge or replace mode
 - **Separator options** – New line, space, blank line, or custom separator between parts
-- **Persistent storage** – Saved to `%LOCALAPPDATA%\NotMetaPromptLibrary\prompts.json`
+- **Resizable panels** – Drag the divider between Library and Compose to any width; each panel enforces a minimum size
+- **Panel toggles** – Hide or show the Library and Compose panels independently via toolbar buttons or keyboard shortcuts
+- **Persistent layout** – Window size, sash position, and panel visibility are saved and restored automatically between sessions
+- **Persistent storage** – Prompts saved to `%LOCALAPPDATA%\NotMetaPromptLibrary\prompts.json`
+
+---
+
+## Keyboard Shortcuts
+
+| Shortcut | Action |
+|----------|--------|
+| `Ctrl+N` | New prompt |
+| `Ctrl+F` | Focus search |
+| `Ctrl+E` | Compose & copy |
+| `Ctrl+[` | Toggle Library panel |
+| `Ctrl+]` | Toggle Compose panel |
+| `Ctrl+W` | Close application |
 
 ---
 

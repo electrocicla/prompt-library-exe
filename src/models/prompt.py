@@ -71,7 +71,7 @@ class Prompt:
         }
 
     @staticmethod
-    def from_dict(data: dict) -> "Prompt":
+    def from_dict(data: dict[str, object]) -> "Prompt":
         role_raw = data.get("role", "body")
         try:
             role = PromptRole(role_raw)
@@ -94,7 +94,7 @@ class Prompt:
     # Helpers
     # ------------------------------------------------------------------
 
-    def with_updated_fields(self, **kwargs) -> "Prompt":
+    def with_updated_fields(self, **kwargs: object) -> "Prompt":
         """Return a new Prompt with given fields overwritten."""
         data = self.to_dict()
         data.update(kwargs)

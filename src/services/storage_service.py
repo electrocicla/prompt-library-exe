@@ -42,7 +42,7 @@ class StorageService:
 
         try:
             raw = self._path.read_text(encoding="utf-8")
-            data: dict = json.loads(raw)
+            data: dict[str, object] = json.loads(raw)
             return LibraryState.from_dict(data)
         except Exception:  # noqa: BLE001 – intentional catch-all for corrupted data
             return LibraryState.empty()
@@ -67,7 +67,7 @@ class StorageService:
 
     def import_json(self, raw_json: str) -> LibraryState:
         """Parse and return a LibraryState from a JSON string."""
-        data: dict = json.loads(raw_json)
+        data: dict[str, object] = json.loads(raw_json)
         return LibraryState.from_dict(data)
 
     @property
