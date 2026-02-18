@@ -2,25 +2,25 @@
 
 A standalone Windows desktop application for managing and composing AI prompts — extracted from the **Not-Meta ECA-Hive VS Code Studio** panel.
 
-Built with Python + customtkinter for a native-feeling dark UI. No Electron, no browser.
+Built with Python + customtkinter for a native dark UI. No Electron, no browser.
 
 ---
 
 ## Features
 
-- **Prompt Library** – Create, edit, delete and star prompts with categories and roles
-- **Role System** – Assign each prompt as `Body`, `Prefix`, or `Suffix`
-- **Multi-select Composition** – Check any number of prefixes + write a body + check any number of suffixes → compose into a single string and copy to clipboard
-- **Copy on click** – Every prompt card has a one-click copy button
-- **Usage-ranked list** – Most-used prompts float to the top automatically
-- **Search** – Instant filter across name, content and category
-- **Favourites** – Star important prompts for a score boost
-- **Export / Import** – JSON backup and restore with merge or replace mode
-- **Separator options** – New line, space, blank line, or custom separator between parts
-- **Resizable panels** – Drag the divider between Library and Compose to any width; each panel enforces a minimum size
-- **Panel toggles** – Hide or show the Library and Compose panels independently via toolbar buttons or keyboard shortcuts
-- **Persistent layout** – Window size, sash position, and panel visibility are saved and restored automatically between sessions
-- **Persistent storage** – Prompts saved to `%LOCALAPPDATA%\NotMetaPromptLibrary\prompts.json`
+- **Prompt Library** — Create, edit, delete, and star prompts with categories and roles
+- **Role System** — Assign each prompt as `Body`, `Prefix`, or `Suffix`
+- **Multi-select Composition** — Check any number of prefixes + write a body + check any number of suffixes → compose into a single string and copy to clipboard
+- **Copy on click** — Every prompt card has a one-click copy button
+- **Usage-ranked list** — Most-used prompts float to the top automatically
+- **Search** — Instant filter across name, content, and category
+- **Favourites** — Star important prompts for a score boost
+- **Export / Import** — JSON backup and restore with merge or replace mode
+- **Separator options** — New line, space, blank line, or custom separator between parts
+- **Resizable panels** — Drag the divider between Library and Compose panels; minimum widths enforced
+- **Panel toggles** — Hide or show Library and Compose panels independently via toolbar buttons or keyboard shortcuts
+- **Persistent layout** — Window size, sash position, and panel visibility are saved and restored between sessions
+- **Persistent storage** — Prompts saved to `%LOCALAPPDATA%\NotMetaPromptLibrary\prompts.json`
 
 ---
 
@@ -83,10 +83,9 @@ prompt-library-exe/
 │           └── create_prompt_dialog.py # Create / edit modal
 ├── assets/
 │   └── generate_icon.py               # Icon generator (Pillow)
-├── build.ps1                          # PowerShell build script
-├── requirements.txt
-├── LICENSE                            # MIT
-└── DEVELOPMENT_PLAN.md                # Roadmap & architecture notes
+├── build.ps1                            # PowerShell build script
+├── requirements.txt                     # Runtime + build dependencies
+└── LICENSE                              # MIT
 ```
 
 ---
