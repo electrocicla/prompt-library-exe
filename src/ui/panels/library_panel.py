@@ -71,7 +71,7 @@ class LibraryPanel(ctk.CTkFrame):
         ctk.CTkLabel(
             header,
             text="📚 PROMPT LIBRARY",
-            font=(AppTheme.FONT_FAMILY, AppTheme.FONT_SIZE_SM, "bold"),
+            font=(AppTheme.FONT_FAMILY, AppTheme.FONT_SIZE_XL, "bold"),
             text_color=AppTheme.FG_ACCENT,
         ).pack(side="left", padx=pad, pady=8)
 
@@ -161,10 +161,10 @@ class LibraryPanel(ctk.CTkFrame):
             self, text="",
             fg_color=AppTheme.BG_ROOT,
             text_color=AppTheme.FG_MUTED,
-            font=(AppTheme.FONT_FAMILY, AppTheme.FONT_SIZE_XS),
+            font=(AppTheme.FONT_FAMILY, AppTheme.FONT_SIZE_SM),
             anchor="w",
         )
-        self._stats_lbl.pack(fill="x", padx=pad, pady=4)
+        self._stats_lbl.pack(fill="x", padx=pad, pady=6)
 
     # ------------------------------------------------------------------
     # Public shortcuts API
@@ -206,7 +206,7 @@ class LibraryPanel(ctk.CTkFrame):
                 fg_color=AppTheme.BTN_PRIMARY_BG if is_active else AppTheme.BTN_SECONDARY_BG,
                 text_color=AppTheme.BTN_PRIMARY_FG if is_active else AppTheme.FG_MUTED,
                 hover_color=AppTheme.BTN_PRIMARY_HOVER,
-                font=(AppTheme.FONT_FAMILY_UI, AppTheme.FONT_SIZE_XS, "bold" if is_active else "normal"),
+                font=(AppTheme.FONT_FAMILY_UI, AppTheme.FONT_SIZE_SM, "bold" if is_active else "normal"),
                 corner_radius=12,
                 command=lambda c=cat: self._select_category(c),
             )

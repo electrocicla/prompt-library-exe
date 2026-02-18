@@ -110,7 +110,7 @@ class PromptCard(ctk.CTkFrame):
         ctk.CTkLabel(
             header,
             text=f"×{p.usage_count}",
-            font=(AppTheme.FONT_FAMILY, AppTheme.FONT_SIZE_XS),
+            font=(AppTheme.FONT_FAMILY, AppTheme.FONT_SIZE_SM),
             text_color=AppTheme.FG_MUTED,
         ).grid(row=0, column=2, padx=(6, 0))
 
@@ -121,14 +121,14 @@ class PromptCard(ctk.CTkFrame):
         ctk.CTkLabel(
             meta,
             text=p.category,
-            font=(AppTheme.FONT_FAMILY, AppTheme.FONT_SIZE_XS),
+            font=(AppTheme.FONT_FAMILY, AppTheme.FONT_SIZE_SM),
             text_color=AppTheme.FG_MUTED,
         ).pack(side="left")
 
         ctk.CTkLabel(
             meta,
             text=f" {p.role.value.upper()} ",
-            font=(AppTheme.FONT_FAMILY, AppTheme.FONT_SIZE_XS, "bold"),
+            font=(AppTheme.FONT_FAMILY, AppTheme.FONT_SIZE_SM, "bold"),
             text_color=role_fg,
             fg_color=role_bg,
             corner_radius=4,

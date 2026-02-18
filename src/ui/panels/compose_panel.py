@@ -60,7 +60,7 @@ class ComposePanel(ctk.CTkFrame):
         ctk.CTkLabel(
             header,
             text="⚡ COMPOSE & COPY",
-            font=(AppTheme.FONT_FAMILY, AppTheme.FONT_SIZE_SM, "bold"),
+            font=(AppTheme.FONT_FAMILY, AppTheme.FONT_SIZE_XL, "bold"),
             text_color=AppTheme.FG_ACCENT,
         ).pack(side="left", padx=pad, pady=8)
 
@@ -231,7 +231,7 @@ class ComposePanel(ctk.CTkFrame):
         ctk.CTkLabel(
             lbl_frame,
             text=title,
-            font=(AppTheme.FONT_FAMILY, AppTheme.FONT_SIZE_XS, "bold"),
+            font=(AppTheme.FONT_FAMILY, AppTheme.FONT_SIZE_SM, "bold"),
             text_color=color,
         ).pack(side="left")
         if subtitle:

@@ -49,15 +49,16 @@ class AppTheme:
     SCROLLBAR_BG = "#1a1a2a"
     SCROLLBAR_FG = "#3a3a5a"
 
-    # Fonts
+    # Fonts — follows Material Design 3 / Fluent 2 type scale
+    # Minimum readable size is 12px; body text is 14px.
     FONT_FAMILY = "Consolas"
     FONT_FAMILY_UI = "Segoe UI"
-    FONT_SIZE_XS = 11
-    FONT_SIZE_SM = 13
-    FONT_SIZE_MD = 14
-    FONT_SIZE_LG = 16
-    FONT_SIZE_XL = 19
-    FONT_SIZE_TITLE = 22
+    FONT_SIZE_XS = 12       # captions, badges, auxiliary hints
+    FONT_SIZE_SM = 14       # standard body / UI labels
+    FONT_SIZE_MD = 16       # card titles, emphasized body
+    FONT_SIZE_LG = 18       # section headings
+    FONT_SIZE_XL = 22       # panel headers
+    FONT_SIZE_TITLE = 26    # window / major hero text
 
     # Geometry
     CARD_CORNER = 8
