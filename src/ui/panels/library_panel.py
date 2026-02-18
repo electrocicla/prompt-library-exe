@@ -28,6 +28,7 @@ from ui.dialogs.create_prompt_dialog import CreatePromptDialog
 
 OnSelectionChanged = Callable[[List[Prompt]], None]
 _TOAST_MS = 1800
+_ALL_CHIP = "All"
 
 
 class LibraryPanel(ctk.CTkFrame):
@@ -49,6 +50,8 @@ class LibraryPanel(ctk.CTkFrame):
         self._on_selection_changed = on_selection_changed
         self._toast_job: Optional[str] = None
         self._cards: List[PromptCard] = []
+        self._active_category: Optional[str] = None   # None = All
+        self._search_entry: Optional[ctk.CTkEntry] = None
 
         self._build()
         self._svc.subscribe(self._on_state_changed)
@@ -108,16 +111,30 @@ class LibraryPanel(ctk.CTkFrame):
 
         self._search_var = ctk.StringVar()
         self._search_var.trace_add("write", lambda *_: self._refresh_list())
-        ctk.CTkEntry(
+        self._search_entry = ctk.CTkEntry(
             search_frame,
             textvariable=self._search_var,
-            placeholder_text="🔍  Search prompts…",
+            placeholder_text="🔍  Search prompts…  (Ctrl+F)",
             fg_color=AppTheme.BG_INPUT,
             border_color=AppTheme.BORDER,
             text_color=AppTheme.FG_MAIN,
             height=34,
             font=(AppTheme.FONT_FAMILY_UI, AppTheme.FONT_SIZE_SM),
-        ).pack(fill="x", padx=pad, pady=6)
+        )
+        self._search_entry.pack(fill="x", padx=pad, pady=6)
+
+        # ── Category chip filter ──────────────────────────────────────
+        self._chips_outer = ctk.CTkFrame(self, fg_color=AppTheme.BG_ROOT, corner_radius=0)
+        self._chips_outer.pack(fill="x")
+        self._chips_scroll = ctk.CTkScrollableFrame(
+            self._chips_outer,
+            fg_color="transparent",
+            orientation="horizontal",
+            height=36,
+            scrollbar_button_color=AppTheme.SCROLLBAR_FG,
+            scrollbar_button_hover_color=AppTheme.FG_ACCENT,
+        )
+        self._chips_scroll.pack(fill="x", padx=pad, pady=(0, 4))
 
         # Divider
         ctk.CTkFrame(self, fg_color=AppTheme.DIVIDER_COLOR, height=1, corner_radius=0).pack(fill="x")
@@ -150,6 +167,56 @@ class LibraryPanel(ctk.CTkFrame):
         self._stats_lbl.pack(fill="x", padx=pad, pady=4)
 
     # ------------------------------------------------------------------
+    # Public shortcuts API
+    # ------------------------------------------------------------------
+
+    def focus_search(self) -> None:
+        """Focus the search entry (Ctrl+F)."""
+        if self._search_entry:
+            self._search_entry.focus_set()
+            self._search_entry.select_range(0, "end")
+
+    def open_create_dialog(self) -> None:
+        """Open the new prompt dialog (Ctrl+N)."""
+        self._open_create_dialog()
+
+    # ------------------------------------------------------------------
+    # Category chips
+    # ------------------------------------------------------------------
+
+    def _refresh_chips(self, prompts: List[Prompt]) -> None:
+        """Rebuild category chip buttons from current prompt categories."""
+        for w in self._chips_scroll.winfo_children():
+            w.destroy()
+
+        categories = [_ALL_CHIP] + sorted(
+            {p.category for p in self._svc.get_all() if p.category}
+        )
+
+        for cat in categories:
+            is_active = (
+                cat == _ALL_CHIP and self._active_category is None
+            ) or cat == self._active_category
+
+            chip = ctk.CTkButton(
+                self._chips_scroll,
+                text=cat,
+                height=24,
+                width=max(40, len(cat) * 8),
+                fg_color=AppTheme.BTN_PRIMARY_BG if is_active else AppTheme.BTN_SECONDARY_BG,
+                text_color=AppTheme.BTN_PRIMARY_FG if is_active else AppTheme.FG_MUTED,
+                hover_color=AppTheme.BTN_PRIMARY_HOVER,
+                font=(AppTheme.FONT_FAMILY_UI, AppTheme.FONT_SIZE_XS, "bold" if is_active else "normal"),
+                corner_radius=12,
+                command=lambda c=cat: self._select_category(c),
+            )
+            chip.pack(side="left", padx=(0, 4))
+
+    def _select_category(self, cat: str) -> None:
+        self._active_category = None if cat == _ALL_CHIP else cat
+        self._refresh_list()
+
+    # ------------------------------------------------------------------
     # List rendering
     # ------------------------------------------------------------------
 
@@ -161,7 +228,13 @@ class LibraryPanel(ctk.CTkFrame):
 
         query = self._search_var.get().strip()
         filtered = self._svc.search(query)
+
+        # Category filter
+        if self._active_category:
+            filtered = [p for p in filtered if p.category == self._active_category]
+
         ranked = self._svc.ranked(filtered)
+        self._refresh_chips(ranked)
 
         if not ranked:
             ctk.CTkLabel(
@@ -183,6 +256,7 @@ class LibraryPanel(ctk.CTkFrame):
                 on_edit=self._handle_edit,
                 on_favourite=self._handle_favourite,
                 on_role_change=self._handle_role_change,
+                on_inline_edit=self._handle_inline_edit,
             )
             card.pack(fill="x", padx=8, pady=3)
             self._cards.append(card)
@@ -228,6 +302,11 @@ class LibraryPanel(ctk.CTkFrame):
 
     def _handle_role_change(self, prompt_id: str, role: PromptRole) -> None:
         self._svc.update(prompt_id, role=role.value)
+
+    def _handle_inline_edit(self, prompt_id: str, field: str, new_value: str) -> None:
+        """Commit an inline edit from a PromptCard without reopening a dialog."""
+        self._svc.update(prompt_id, **{field: new_value})
+        self._toast(f"Updated {field}")
 
     def _open_create_dialog(self) -> None:
         dlg = CreatePromptDialog(self.winfo_toplevel())
@@ -286,6 +365,11 @@ class LibraryPanel(ctk.CTkFrame):
     # ------------------------------------------------------------------
 
     def _on_state_changed(self, state: LibraryState) -> None:
+        # If active category no longer exists in prompts, reset to All
+        if self._active_category:
+            categories = {p.category for p in state.prompts}
+            if self._active_category not in categories:
+                self._active_category = None
         self._refresh_list(state)
         if self._on_selection_changed:
             self._on_selection_changed(state.prompts)

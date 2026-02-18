@@ -58,26 +58,38 @@ class MainWindow(ctk.CTk):
         self.columnconfigure(2, weight=4, minsize=400)  # compose
         self.rowconfigure(0, weight=1)
 
-        library_panel = LibraryPanel(
+        self._library_panel = LibraryPanel(
             self,
             prompt_service=prompt_svc,
             clipboard=clip_svc,
             storage=storage,
         )
-        library_panel.grid(row=0, column=0, sticky="nsew")
+        self._library_panel.grid(row=0, column=0, sticky="nsew")
 
         # Vertical divider
         ctk.CTkFrame(self, fg_color=AppTheme.DIVIDER_COLOR, width=1, corner_radius=0).grid(
             row=0, column=1, sticky="ns"
         )
 
-        compose_panel = ComposePanel(
+        self._compose_panel = ComposePanel(
             self,
             prompt_service=prompt_svc,
             compose_service=compose_svc,
             clipboard=clip_svc,
         )
-        compose_panel.grid(row=0, column=2, sticky="nsew")
+        self._compose_panel.grid(row=0, column=2, sticky="nsew")
+
+        self._setup_shortcuts()
+
+    # ------------------------------------------------------------------
+    # Keyboard shortcuts
+    # ------------------------------------------------------------------
+
+    def _setup_shortcuts(self) -> None:
+        """Bind global keyboard shortcuts."""
+        self.bind_all("<Control-n>", lambda _: self._library_panel.open_create_dialog())
+        self.bind_all("<Control-f>", lambda _: self._library_panel.focus_search())
+        self.bind_all("<Control-e>", lambda _: self._compose_panel.compose_and_copy())
 
     # ------------------------------------------------------------------
     # Icon

@@ -35,12 +35,12 @@ Models (zero logic)
 
 ## 2. Roadmap
 
-### v1.1 – Stability & Polish
-- [ ] Keyboard shortcut overlay (`Ctrl+N` = new, `Ctrl+F` = search, `Ctrl+E` = compose)
-- [ ] Drag-and-drop reorder for prefix/suffix selection lists
-- [ ] Inline editing directly on the card (avoid dialog for quick fixes)
-- [ ] Category filter chips (horizontal chip bar above list)
-- [ ] "Clear all selections" button in compose panel
+### v1.1 – Stability & Polish ✅ SHIPPED
+- [x] Keyboard shortcut overlay (`Ctrl+N` = new, `Ctrl+F` = search, `Ctrl+E` = compose)
+- [x] Drag-and-drop reorder for prefix/suffix selection lists (`DragSortableList` widget)
+- [x] Inline editing directly on the card (double-click name or content to edit in-place)
+- [x] Category filter chips (horizontal scrollable chip bar above prompt list)
+- [x] "Clear all selections" button in compose panel header
 
 ### v1.2 – Storage Abstraction (SRP evolution)
 - [ ] Extract `IStorageBackend` interface: `load() → LibraryState`, `save(state) → None`
