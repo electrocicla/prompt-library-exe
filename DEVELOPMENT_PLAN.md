@@ -42,11 +42,13 @@ Models (zero logic)
 - [x] Category filter chips (horizontal scrollable chip bar above prompt list)
 - [x] "Clear all selections" button in compose panel header
 
-### v1.2 – Storage Abstraction (SRP evolution)
-- [ ] Extract `IStorageBackend` interface: `load() → LibraryState`, `save(state) → None`
-- [ ] Implement `SQLiteStorageBackend` for indexed search performance
-- [ ] Implement `CloudStorageBackend` (Neon REST or Supabase) for cross-device sync
-- [ ] `StorageService` becomes a facade that delegates to the active backend
+### v1.2 – SQLite Storage (local-only)
+> This is a local-only exe. No cloud, no sync — all data stays in `%LOCALAPPDATA%\NotMetaPromptLibrary\`.
+- [ ] Extract `IStorageBackend` Protocol: `load() → LibraryState`, `save(state) → None`
+- [ ] Implement `SQLiteStorageBackend` (`prompts.db`) for indexed search and faster ranked queries
+- [ ] Keep `JSONStorageBackend` (current impl) as the default fallback for portability
+- [ ] `StorageService` becomes a thin facade that delegates to the active backend
+- [ ] One-time migration: detect existing `prompts.json` on first launch and import into SQLite
 
 ```python
 class IStorageBackend(Protocol):
@@ -62,24 +64,18 @@ class StorageService:
 - [ ] Built-in transformers: `UpperCaseTransformer`, `TrimTransformer`, `MarkdownEscapeTransformer`
 - [ ] Transformer pipeline selectable per compose action
 
-### v1.4 – Not-Meta Ecosystem Integration
-- [ ] **WebSocket Gateway**: expose a local WS server (`ws://127.0.0.1:9010`) that the Hydrogen frontend can connect to for library sync
-- [ ] **IPC Protocol**: define JSON message schema for `PROMPT_COPY`, `PROMPT_CREATE`, `STATE_SYNC`
-- [ ] **ECA-Hive bridge**: re-use `HivePromptLibrary` localStorage format (schema v2) for seamless import
-- [ ] **Shared type definitions**: extract `PromptEntry` type to a shared TypeScript + Python codegen contract
+### v1.4 – Import / Export & Portability
+> Local-only. No WebSocket, no cloud sync, no external services.
+- [ ] **JSON export**: one-click full library export to a timestamped `.json` file (already partially present)
+- [ ] **JSON import with merge**: import from a file, deduplicate by name, choose overwrite or skip
+- [ ] **Clipboard export**: copy entire library as formatted Markdown table
+- [ ] **ECA-Hive import**: parse `HivePromptLibrary` localStorage JSON dump (schema v2) for migration from the browser extension
 
-```
-Not-Meta Hydrogen (browser)
-    ↕ WebSocket (port 9010)
-PromptLibrary.exe (Python)
-    ↕ JSON file / SQLite
-%LOCALAPPDATA%\NotMetaPromptLibrary\
-```
-
-### v1.5 – Multi-user / Collaboration
-- [ ] Named "workspaces" (personal, team-a, project-x)
-- [ ] Read-only shared libraries via URL share (export → Gist import)
-- [ ] Role-based access control preparation
+### v1.5 – UX Polish
+- [ ] System tray icon (minimize to tray instead of closing)
+- [ ] Pinned/floating always-on-top mode
+- [ ] Dark/light theme toggle
+- [ ] Per-category color coding
 
 ---
 
